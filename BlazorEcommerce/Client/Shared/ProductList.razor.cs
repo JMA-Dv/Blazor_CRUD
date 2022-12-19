@@ -1,5 +1,4 @@
-﻿using BlazorEcommerce.Shared;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
 namespace BlazorEcommerce.Client.Shared
@@ -9,14 +8,12 @@ namespace BlazorEcommerce.Client.Shared
         [Inject]
         public HttpClient Http { get; set; }
 
-        private static List<Product> Products = new List<Product>();
+        [Inject]
+        public IProductService ProductService { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
-            var result = await Http.GetFromJsonAsync<List<Product>>("api/product");
-            if (result != null)
-            {
-                Products = result;
-            }
+            await ProductService.GetProducts();
         }
     }
 }
