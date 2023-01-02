@@ -1,11 +1,10 @@
-﻿using BlazorEcommerce.Shared;
-
-namespace BlazorEcommerce.Client.Services.ProductService
+﻿namespace BlazorEcommerce.Client.Services.ProductService
 {
     public interface IProductService
     {
+        event Action ProductsChanced;
         List<Product> Products { get; set; }
-        Task GetProducts();
+        Task GetProducts(string? categoryUrl = null);
         Task<ServiceResponse<Product>> GetProductById(int id);
     }
 }

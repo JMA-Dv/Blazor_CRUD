@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Net.Http.Json;
+
 
 namespace BlazorEcommerce.Client.Shared
 {
-    public partial class ProductList
+    public partial class ProductList:IDisposable
     {
         [Inject]
         public HttpClient Http { get; set; }
@@ -11,9 +11,14 @@ namespace BlazorEcommerce.Client.Shared
         [Inject]
         public IProductService ProductService { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        public void Dispose()
         {
-            await ProductService.GetProducts();
+            ProductService.ProductsChanced -= StateHasChanged;
+        }
+
+        protected override void OnInitialized()
+        {
+            ProductService.ProductsChanced += StateHasChanged;
         }
     }
 }
